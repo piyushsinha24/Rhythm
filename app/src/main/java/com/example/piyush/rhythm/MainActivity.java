@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
@@ -68,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
                                                 mp.start();
                                                 seekBar.setProgress(0);
                                                 seekBar.setMax(mp.getDuration());
+                                                Log.d("Prog","run: "+mp.getDuration());
 
                                             }
                                         });
@@ -107,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
                             seekBar.setProgress(mp.getCurrentPosition());
                         }
                     });
+                        Log.d("Runwa","run: "+mp.getCurrentPosition());
 
                 }
             }
@@ -156,6 +159,7 @@ public class MainActivity extends AppCompatActivity {
                     songs.add(s);
 
                 }while (cursor.moveToNext());
+                Log.d("SongsList","run: "+songs);
 
 
 
