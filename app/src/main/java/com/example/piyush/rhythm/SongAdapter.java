@@ -16,10 +16,10 @@ import java.util.ArrayList;
  */
 
 public class SongAdapter extends RecyclerView.Adapter<SongAdapter.Songholder> {
-    ArrayList<Songinfo> songs;
-    Context context;
-    OnItemClickListener onItemClickListener;
-    SongAdapter(Context context,ArrayList<Songinfo>songs){
+    private ArrayList<Songinfo> songs=new ArrayList<Songinfo>();
+    private Context context;
+    private OnItemClickListener mOnItemClickListener;
+    public SongAdapter(Context context,ArrayList<Songinfo>songs){
         this.context=context;
         this.songs=songs;
     }
@@ -27,8 +27,8 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.Songholder> {
     public interface OnItemClickListener {
         void onItemClick(Button b,View v,Songinfo obj,int position);
     }
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener){
-        this.onItemClickListener=onItemClickListener;
+    public void setOnItemClickListener(OnItemClickListener mItemClickListener){
+        this.mOnItemClickListener=mItemClickListener;
     }
 
     @Override
@@ -40,13 +40,13 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.Songholder> {
     @Override
     public void onBindViewHolder(final Songholder holder, final int position) {
         final Songinfo c =songs.get(position);
-        holder.songname.setText(c.songname);
-        holder.artistname.setText(c.artistname);
+        holder.songname.setText(c.getSongname());
+        holder.artistname.setText(c.getArtistname());
         holder.btnaction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(onItemClickListener!=null)
-                    onItemClickListener.onItemClick(holder.btnaction,v,c,position);
+                if(mOnItemClickListener!=null)
+                    mOnItemClickListener.onItemClick(holder.btnaction,v,c,position);
 
             }
         });

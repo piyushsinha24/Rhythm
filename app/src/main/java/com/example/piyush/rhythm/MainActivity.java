@@ -38,71 +38,77 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         recyclerView = (RecyclerView)findViewById(R.id.recyclerview);
         seekBar = (SeekBar)findViewById(R.id.seekBar);
-       // Songinfo s=new Songinfo("Cheap Thrills","Sia","https://fullgaana.com/siteuploads/files/sfd4/1522/Sia%20-%20Cheap%20Thrills%20(feat.%20Sean%20Paul)-(FullGaana.Com).mp3");
-      //  songs.add(s);
         songAdapter = new SongAdapter(this,songs);
+        recyclerView.setAdapter(songAdapter);
         LinearLayoutManager  linearLayoutManager=new LinearLayoutManager(this);
         DividerItemDecoration dividerItemDecoration=new DividerItemDecoration(recyclerView.getContext(),linearLayoutManager.getOrientation());
-        recyclerView.addItemDecoration(dividerItemDecoration);
         recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(songAdapter);
+        recyclerView.addItemDecoration(dividerItemDecoration);
         songAdapter.setOnItemClickListener(new SongAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(final Button b, View v, final Songinfo obj, int position) {
-                Runnable r=new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            if (b.getText().toString().equals("Stop")) {
-                                b.setText("Play");
+                if (b.getText().equals("Stop")) {
                                 mp.stop();
                                 mp.reset();
                                 mp.release();
                                 mp = null;
+                                b.setText("Play");
                             } else {
-                                mp = new MediaPlayer();
-                                mp.setDataSource(obj.getSongurl());
-                                mp.prepareAsync();
-                                mp.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                                Runnable runnable =new Runnable() {
                                     @Override
-                                    public void onPrepared(MediaPlayer mediaPlayer) {
-                                        mp.start();
-                                        seekBar.setProgress(0);
-                                        seekBar.setMax(mp.getDuration());
+                                    public void run() {
+                                        try
+                                        {
+                                        mp = new MediaPlayer();
+                                        mp.setDataSource(obj.getSongurl());
+                                        mp.prepareAsync();
+                                        mp.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                                            @Override
+                                            public void onPrepared(MediaPlayer mp) {
+                                                mp.start();
+                                                seekBar.setProgress(0);
+                                                seekBar.setMax(mp.getDuration());
 
-                                    }
-                                });
-                                b.setText("Stop");
-                            }
+                                            }
+                                        });
+                                        b.setText("Stop");
 
-                        } catch (IOException e) {
 
-                        }
+                        } catch (Exception e) {}
 
                     }
                 };
-                handler.postDelayed(r,100);
+                handler.postDelayed(runnable,100);
 
+            }
             }
 
 
         });
 
         CheckPermission();
-        Thread t=new Mythread();
+        Thread t=new runThread();
         t.start();
 
     }
-    public class Mythread extends Thread{
+    public class runThread extends Thread {
         @Override
-        public void run(){
-            try {
-                Thread.sleep(1000);
-                if(mp!=null) {
-                    seekBar.setProgress(mp.getCurrentPosition());
+        public void run() {
+            while (true) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                if (mp != null) {
+                    seekBar.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            seekBar.setProgress(mp.getCurrentPosition());
+                        }
+                    });
+
+                }
             }
         }
     }
@@ -114,9 +120,7 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
         }
-        else {
             loadsongs();
-        }
 
     }
     @Override
@@ -139,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
     }
     private void loadsongs(){
         Uri uri= MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-        String selection = MediaStore.Audio.Media.IS_MUSIC+"!=0";
+        String selection = MediaStore.Audio.Media.IS_MUSIC+"!= 0";
         Cursor cursor = getContentResolver().query(uri,null,selection,null,null);
         if(cursor!=null)
         {
