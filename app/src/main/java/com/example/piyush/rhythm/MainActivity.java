@@ -17,6 +17,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
                                 mp.release();
                                 mp = null;
                                 b.setText("Play");
+                                seekBar.setProgress(0);
                             } else {
                                 Runnable runnable =new Runnable() {
                                     @Override
@@ -74,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
                                             }
                                         });
                                         b.setText("Stop");
+
 
 
                         } catch (Exception e) {}
@@ -107,14 +110,38 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             seekBar.setProgress(mp.getCurrentPosition());
+
+                            seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                                @Override
+                                public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                                    if(mp!=null && b){
+                                        mp.seekTo(i);
+                                    }
+                                }
+
+                                @Override
+                                public void onStartTrackingTouch(SeekBar seekBar) {
+
+                                }
+
+                                @Override
+                                public void onStopTrackingTouch(SeekBar seekBar) {
+
+                                }
+                            });
                         }
+
+
                     });
-                        Log.d("Runwa","run: "+mp.getCurrentPosition());
+                     Log.d("Runwa","run: "+mp.getCurrentPosition());
 
                 }
+
             }
         }
+
     }
+
     private void CheckPermission(){
         if(Build.VERSION.SDK_INT>=23) {
             if (ActivityCompat.checkSelfPermission(this
