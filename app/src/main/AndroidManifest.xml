@@ -7,9 +7,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/player_icon"
+        android:icon="@drawable/icon"
         android:label="Rhythm"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
