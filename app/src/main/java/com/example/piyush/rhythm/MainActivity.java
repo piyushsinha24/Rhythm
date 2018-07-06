@@ -45,11 +45,11 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
 
-        MenuItem searchItem = menu.findItem(R.id.action_search);
+        MenuItem searchItem = menu.findItem(R.id.search);
 
         SearchManager searchManager = (SearchManager) MainActivity.this.getSystemService(Context.SEARCH_SERVICE);
 
-        SearchView searchView = (SearchView)menu.findItem(R.id.action_search).getActionView();
+        SearchView searchView = (SearchView)menu.findItem(R.id.search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
         return true;
