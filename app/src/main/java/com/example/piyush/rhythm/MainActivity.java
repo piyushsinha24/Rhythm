@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     Handler handler=new Handler();
     private String sortorder;
 
-    public boolean onCreateOptionsMenu(Menu menu) {
+ /*   public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
 
@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
         return true;
     }
+    */
 
 
 
