@@ -19,6 +19,7 @@ public class SongAdapter extends RecyclerView.Adapter<SongAdapter.Songholder> {
     private ArrayList<Songinfo> songs=new ArrayList<Songinfo>();
     private Context context;
     private OnItemClickListener mOnItemClickListener;
+
     public SongAdapter(Context context,ArrayList<Songinfo>songs){
         this.context=context;
         this.songs=songs;
