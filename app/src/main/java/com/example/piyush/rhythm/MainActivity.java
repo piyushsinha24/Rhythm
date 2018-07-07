@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     Handler handler=new Handler();
     private String sortorder;
 
- /*   public boolean onCreateOptionsMenu(Menu menu) {
+   /*public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
 
@@ -53,8 +53,8 @@ public class MainActivity extends AppCompatActivity {
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
         return true;
-    }
-    */
+    }*/
+
 
 
 
@@ -80,6 +80,8 @@ public class MainActivity extends AppCompatActivity {
                                 mp.release();
                                 mp = null;
                                 b.setText("Play");
+                                b.setBackgroundColor(getResources().getColor(R.color.colorbtn));
+
                                 seekBar.setProgress(0);
                             } else {
                                 Runnable runnable =new Runnable() {
@@ -100,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
 
                                             }
                                         });
+                                        b.setBackgroundColor(getResources().getColor(R.color.colorAccent));
                                         b.setText("Stop");
 
 
